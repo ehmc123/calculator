@@ -11,27 +11,15 @@ class Colors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
-def plus(stack):
-    stack.append(stack.pop() + stack.pop())
-
-def minus(stack):
-    stack.append(stack.pop() - stack.pop())
-
-def multiply(stack):
-    stack.append(stack.pop() * stack.pop())
-
-def divide(stack):
-    stack.append(stack.pop() / stack.pop())
-
-def powerOf(stack):
-    stack.append(stack.pop() ** stack.pop())
+def operate(stack,operator):
+    stack.append(eval(f"stack.pop() {operator} stack.pop()"))
 
 operators =  {
-    "+": plus,
-    "-": minus,
-    "*": multiply,
-    "/": divide,
-    "**": powerOf
+    "+",
+    "-",
+    "*",
+    "/",
+    "**"
 }
 
 def main():
@@ -52,7 +40,7 @@ def processStack(tokens):
 
     for token in tokens:
         if token in operators:
-            operators[token](stack)
+            operate(stack, token)
             validList.append(token)
         else:
             try:
