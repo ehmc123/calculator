@@ -11,9 +11,6 @@ class Colors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
-def operate(stack,operator):
-    stack.append(eval(f"stack.pop() {operator} stack.pop()"))
-
 operators =  {
     "+",
     "-",
@@ -23,36 +20,38 @@ operators =  {
 }
 
 def main():
-    tokens = stackInput()
+    tokens = stack_input()
     try:
-        processedStack, processedList = processStack(tokens)
-        print(f"The result of {Colors.PINK}{processedList}{Colors.ENDC} is {Colors.GREEN}{processedStack}{Colors.ENDC}")
+        processed_stack, processed_list = process_stack(tokens)
+        print(f"The result of {Colors.PINK}{processed_list}{Colors.ENDC} is {Colors.GREEN}{processed_stack}{Colors.ENDC}")
     except:
         print(f"{Colors.RED}Stack empty{Colors.ENDC}")
         exit()
 
-def stackInput():
+def stack_input():
     return input("Input using Reverse Polish notation: ").strip().split()
 
-def processStack(tokens):
+def process_stack(tokens):
     stack = []
-    validList = []
+    valid_list = []
 
     for token in tokens:
         if token in operators:
             operate(stack, token)
-            validList.append(token)
+            valid_list.append(token)
         else:
             try:
                 stack.append(float(token))
-                validList.append(token)
+                valid_list.append(token)
             except ValueError:
                 print(f"{Colors.RED}Error: Only Operands and Operators are accepted.{Colors.ENDC}")
     if stack[0]:
-        return str(stack[0]), ' '.join(validList)
+        return str(stack[0]), ' '.join(valid_list)
     else: 
         raise Exception()
 
+def operate(stack, operator):
+    stack.append(eval(f"stack.pop() {operator} stack.pop()"))
 
 if __name__ == "__main__":
     main()
